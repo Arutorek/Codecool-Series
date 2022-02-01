@@ -46,8 +46,15 @@ def most_rated(page=1):
 
 
 @app.route('/show/<id>')
-def show_details():
-    return render_template()
+def show_details(id):
+    show_data = queries.get_show_data(id)[0]
+    show_genres = queries.get_genres_from_show(id)
+    show_actors = queries.get_show_actors(id)
+
+    seasons = queries.get_seasons(id)
+
+    return render_template('show-details.html', show_data=show_data, show_actors=show_actors,
+                           show_genres=show_genres, seasons=seasons)
 
 
 def main():
