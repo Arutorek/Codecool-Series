@@ -72,3 +72,24 @@ def get_seasons(id):
         WHERE {id} = show_id;
         """
     )
+
+
+def get_100_actors():
+    return data_manager.execute_select(
+        f"""
+        SELECT id, name
+        FROM actors
+        LIMIT 100;
+        """
+    )
+
+
+def get_show_id_by_actor(actor_id):
+    return data_manager.execute_select(
+        f"""
+        SELECT DISTINCT show_id, s.title
+        FROM show_characters
+        JOIN shows s on show_characters.show_id = s.id
+        WHERE {actor_id} = actor_id;
+        """
+    )

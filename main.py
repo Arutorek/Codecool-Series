@@ -3,6 +3,7 @@ from data import queries
 import math
 from dotenv import load_dotenv
 import utils
+from util import json_response
 
 
 load_dotenv()
@@ -58,6 +59,18 @@ def show_details(id):
     seasons = queries.get_seasons(id)
     return render_template('show-details.html', show_data=show_data, show_actors=show_actors,
                            show_genres=show_genres, seasons=seasons)
+
+
+@app.route('/actors')
+def actors():
+    get_actors = queries.get_100_actors()
+    return render_template('actors-list.html', actors=get_actors)
+
+
+@app.route('/api/actor-shows/<int:actor_id>/')
+@json_response
+def get_shows_by_actor_id(actor_id):
+    return queries.get_show_id_by_actor(actor_id)
 
 
 def main():
