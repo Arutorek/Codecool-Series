@@ -7,6 +7,8 @@ window.onload = function () {
 
 
 function addListeners() {
+    let actors = dataHandler.getShowsByActors(436511)
+    console.log(actors)
     document.querySelectorAll('.actors').forEach(actors => {
         actors.addEventListener('click', createTableForShow)
     })
@@ -43,7 +45,9 @@ function deleteTable() {
 
 
 async function getShows(clickEvent) {
+    console.log(clickEvent)
     let actorId = clickEvent.target.dataset.id
+    console.log(actorId)
     return await dataHandler.getShowsByActors(actorId)
 }
 

@@ -93,3 +93,36 @@ def get_show_id_by_actor(actor_id):
         WHERE {actor_id} = actor_id;
         """
     )
+
+def get_actor(character_id):
+    return data_manager.execute_select(
+        f"""
+        SELECT name, birthday
+        FROM actors a
+        JOIN show_characters s
+        ON a.id = s.actor_id
+        WHERE s.id = '{character_id}'
+        """
+    )
+
+
+def get_genres():
+    return data_manager.execute_select(
+        f"""
+        SELECT *
+        FROM genres;
+        """
+    )
+
+
+def get_shows_genre(data_id):
+    return data_manager.execute_select(
+        f"""
+        SELECT title
+        FROM shows
+        JOIN show_genres
+        ON shows.id = show_id
+        WHERE genre_id = {data_id}
+        ORDER BY title
+        """
+    )

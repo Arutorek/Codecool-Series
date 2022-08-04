@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, jsonify
 from data import queries
 import math
 from dotenv import load_dotenv
@@ -13,11 +13,6 @@ app = Flask('codecool_series')
 def index():
     shows = queries.get_shows()
     return render_template('index.html', shows=shows)
-
-
-@app.route('/design')
-def design():
-    return render_template('design.html')
 
 
 @app.route('/shows')
@@ -71,6 +66,27 @@ def actors():
 @json_response
 def get_shows_by_actor_id(actor_id):
     return queries.get_show_id_by_actor(actor_id)
+
+
+@app.route('/api/get-characters/<character_id>')
+@json_response
+def get_characters(character_id):
+    test = queries.get_actor(character_id)
+    name = test[0]['name']
+    birthday = str(test[0]['birthday'])
+    return (name, birthday)
+
+
+@app.route('/genres')
+def genres():
+    genres_data = queries.get_genres()
+    return render_template('pa.html',genres_data=genres_data)
+
+
+@app.route('/api/get-series/<int:data_id>')
+@json_response
+def get_shows_by_genre(data_id):
+    return queries.get_shows_genre(data_id)
 
 
 def main():
